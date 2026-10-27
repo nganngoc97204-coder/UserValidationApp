@@ -1,20 +1,29 @@
 package com.example.uservalidationapp
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.uservalidationapp.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_home)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Nhận đối tượng User được truyền từ MainActivity qua Intent
+        val user = intent.getSerializableExtra("EXTRA_USER") as? User
+
+        if (user != null) {
+            binding.tvWelcome.text = "Xin chào, ${user.fullName}!"
+            binding.tvEmail.text = "Email: ${user.email}"
+            binding.tvPhone.text = "Số điện thoại: ${user.phone}"
+        }
+
+        binding.btnLogout.setOnClickListener {
+            finish() // Quay lại màn hình đăng ký
         }
     }
 }
