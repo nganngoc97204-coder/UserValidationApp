@@ -13,7 +13,6 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Nhận đối tượng User được truyền từ MainActivity qua Intent
         val user = intent.getSerializableExtra("EXTRA_USER") as? User
 
         if (user != null) {
